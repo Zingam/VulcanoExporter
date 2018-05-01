@@ -14,10 +14,10 @@ In order for Blender to be able to find the add-on:
 [2]: https://ss64.com/nt/mklink.html
 
 Files
-====
-*MakeDirectoryJunction.bat - Creates the required symlink on Windows
-*VulcanoExporter.blend - Blender project file
+----
+* MakeDirectoryJunction.bat - Creates the required symlink on Windows
+* VulcanoExporter.blend - Blender project file
 
-NOTES
-====
+Notes
+----
 If the Python files are edited with an external editor they need to be reloaded from inside of Blender with *"Text -> Reload (Ctrl-R)"*.

@@ -4,13 +4,17 @@ import bpy
 import bmesh
 import os
 
-def export_VulcanoFileFormatMesh(context):
+def export_VulcanoFileFormatMesh(operator, context):
     # Clear System Console
     os.system("cls")
     
     # Begin export
     print("\n==========================================================")
-    print(FFM_MESSAGE, "Exporting mesh...")
+    print(FFM_MESSAGE, "Exporting mesh...\n")
+    
+    print("operator.exported_file_type", operator.exported_file_type)
+    print("operator.path_mode", operator.path_mode)
+    print("operator.use_selection", operator.use_selection)
     
     for object in bpy.data.objects:
         if "MESH" == object.type:

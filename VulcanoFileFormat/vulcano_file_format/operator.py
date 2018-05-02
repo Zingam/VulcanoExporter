@@ -7,9 +7,9 @@ class VulcanoExporter(
     """Exports current scene to Vulcano File Format (.vmsh)"""
     
     # Unique identifier to be referenced by buttons and menu items
-    bl_idname = "vulcano_exporter.vffmsh"
+    bl_idname = "vulcano_file_format.vulcano_exporter"
     # Text used by UI elements to display in the interface
-    bl_label = "Vulcano File (.vffmsh)"
+    bl_label = "Export Vulcano File (.vffmsh)"
     # Add operator preset options to the File Selection dialog
     bl_options = {"PRESET"}
     
@@ -32,7 +32,7 @@ class VulcanoExporter(
                 "Exports Vulcano File (.vmsh) in binary format"),
                ("EXPORT_FORMAT_ASCII", "ASCII",
                 "Exports Vulcano File (.vmsh) in ASCII text format")),
-        name="Format type",
+        name="Format:",
         description="Select the exported file format type")
         
     path_mode = bpy_extras.io_utils.path_reference_mode
@@ -65,7 +65,7 @@ class VulcanoExporter(
         Called when running the operator.
         """
         from . import exporter
-        exporter.export_VulcanoFileFormatMesh(context)
+        exporter.export_VulcanoFileFormatMesh(self, context)
         
         return {"FINISHED"}
 

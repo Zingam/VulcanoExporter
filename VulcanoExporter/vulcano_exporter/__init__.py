@@ -49,7 +49,8 @@ ADDON_MESSAGE = ( "\n" +
 # Add-on registration
 ################################################################################
 
-# A list of classes to be registered
+# A list of classes to be registered. Operator subclasses must be registered 
+# before accessing them from Blender.
 classes = (
     operator.VulcanoExporter
 )

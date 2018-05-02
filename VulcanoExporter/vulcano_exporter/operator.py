@@ -6,23 +6,27 @@ class VulcanoExporter(
     bpy_extras.io_utils.ExportHelper):
     """Exports current scene to Vulcano File Format (.vmsh)"""
     
-    bl_idname = "vulcano_exporter.vmsh"
-    bl_label = "Vulcano File (.vmsh)"
+    # Unique identifier to be referenced by buttons and menu items
+    bl_idname = "vulcano_exporter.vffmsh"
+    # Text used by UI elements to display in the interface
+    bl_label = "Vulcano File (.vffmsh)"
+    # Add operator preset options to the File Selection dialog
+    bl_options = {"PRESET"}
     
     ############################################################################
     # Operator properties
-    ############################################################################
+    ############################################################################  
     
-    filename = bpy.props.StringProperty(subtype="FILE_NAME")
-    filename_ext = ".vmsh"
-    filepath = bpy.props.StringProperty(subtype="FILE_PATH")
+    # Set the file extension (used by ExportHelper internally)
+    filename_ext = ".vffmsh"
     
     # File filter
     filter_glob = bpy.props.StringProperty(
-        default="*.vmsh",
+        default="*.vffmsh",
         options={"HIDDEN"})
     
     # Export options
+    box_title = bpy.props.StringProperty()
     exported_file_type = bpy.props.EnumProperty(
         items=(("EXPORT_FORMAT_BINARY", "Binary",
                 "Exports Vulcano File (.vmsh) in binary format"),
@@ -30,6 +34,8 @@ class VulcanoExporter(
                 "Exports Vulcano File (.vmsh) in ASCII text format")),
         name="Format type",
         description="Select the exported file format type")
+        
+    path_mode = bpy_extras.io_utils.path_reference_mode
     
     use_selection = bpy.props.BoolProperty(
         name="Selection Only",
@@ -42,30 +48,26 @@ class VulcanoExporter(
     
     def draw(self, context):
         """
-        Draw the layout manually. Without this method the UI methods will be
+        Draws the layout manually. Without this method the UI methods will be
         placed in the layout automatically.
         """ 
         # Draw a box and put the UI elements inside
         box = self.layout.box()
+        # A title for the box
+        box.label(text="Export Options:", icon="OUTLINER_DATA_MESH")
+        # Export options
         box.prop(self, "exported_file_type")
+        box.prop(self, "path_mode")
         box.prop(self, "use_selection")
     
     def execute(self, context):
+        """
+        Called when running the operator.
+        """
         from . import exporter
         exporter.export_VulcanoFileFormatMesh(context)
         
         return {"FINISHED"}
-    
-    def invoke(self, context, event):
-        """
-        Initialize the operator from the context at the moment the operator
-        is called. invoke() is typically used to assign properties which are then 
-        used by execute().
-        """
-        # Open the File Selection dialog
-        context.window_manager.fileselect_add(self)
-        
-        return {"RUNNING_MODAL"}
 
     ############################################################################
     # Class methods
@@ -73,6 +75,8 @@ class VulcanoExporter(
         
     @classmethod
     def poll(cls, context):
-        
+        """
+        Checks if the operator can run.
+        """
         return context.active_object is not None
     

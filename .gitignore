@@ -226,4 +226,4 @@ __install-*/
 __pycache__/
 
 # Bleder
-*.blend1
+*.blend*

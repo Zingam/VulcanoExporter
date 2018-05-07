@@ -68,11 +68,11 @@ class VulcanoExporter(
         exporter.export_VulcanoFileFormatMesh(self, context)
         
         return {"FINISHED"}
-
+    
     ############################################################################
     # Class methods
     ############################################################################
-        
+                                                                      
     @classmethod
     def poll(cls, context):
         """

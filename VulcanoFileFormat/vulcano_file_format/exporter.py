@@ -12,15 +12,22 @@ def export_VulcanoFileFormatMesh(operator, context):
     print("\n==========================================================")
     print(FFM_MESSAGE, "Exporting mesh...\n")
     
-    print("operator.exported_file_type", operator.exported_file_type)
-    print("operator.path_mode", operator.path_mode)
-    print("operator.use_selection", operator.use_selection)
+    print("operator.exported_file_type", 
+        operator.exported_file_type, 
+        type(operator.exported_file_type))
+    print("operator.path_mode", 
+        operator.path_mode, 
+        type(operator.path_mode))
+    print("operator.use_selection", 
+        operator.use_selection, 
+        type(operator.use_selection))
     
     for object in bpy.data.objects:
         if "MESH" == object.type:
             mesh = object.data
             
-            print("\n> Found object \"%s\"" % (object.name), "of type:", type(mesh))
+            print("\n> Found object \"%s\"" % (object.name), 
+                "of type:", type(mesh))
             
             print("\n  Vertex coordinates:\n")
             for vertex in mesh.vertices:

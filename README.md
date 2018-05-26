@@ -17,7 +17,7 @@ How to Develop with Blender
 ----
 In order for Blender to be able to find the add-on:
 1. Create a base directory e.g. "BlenderScripts".
-2. In **Blender -> User Preferences -> File -> Scripts** set the path to point to the base directory that contains the scripts, e.g. "Blender".
+2. In **Blender -> User Preferences -> File -> Scripts** set the path to point to the base directory that contains the scripts, e.g. "X:\Blender".
 3. Create a directory ["addons"][2].
 4. If the addon is structured as a Python package in a subdirectory:
    * *On Windows:* Create *a directory junction* with  [`mklink /j <link> <target>`][3].

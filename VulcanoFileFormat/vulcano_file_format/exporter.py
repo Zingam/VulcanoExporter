@@ -5,7 +5,7 @@ if "bpy" in locals():
     import importlib
     importlib.reload(utils)
 else:
-    from . import utils
+    from .blender import utils
 
 import bmesh
 import bpy

@@ -199,9 +199,12 @@ FakesAssemblies/
 #
 ###############################################################################
 
-# Visual Studio - Miscellaneous files
+# Visual Studio
 *.VC.opendb
 .vc/
+
+# Visual Studio Code
+.vscode/
 
 # Qt/QtCreator Files
 *.qm
@@ -225,5 +228,5 @@ __install-*/
 # Python
 __pycache__/
 
-# Bleder
+# Blender
 *.blend*

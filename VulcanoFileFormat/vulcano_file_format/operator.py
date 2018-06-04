@@ -41,6 +41,16 @@ class VulcanoExporter(
         name="Selection Only",
         description="Export selected objects only",
         default=True)
+        
+    apply_modifiers = bpy.props.BoolProperty(
+        name="Apply Modifiers",
+        description="Apply modifiers",
+        default=True)
+        
+    clear_system_console = bpy.props.BoolProperty(
+        name="Clear System Console",
+        description="Clear the Blender system console",
+        default=True)
     
     ############################################################################
     # Methods
@@ -59,6 +69,10 @@ class VulcanoExporter(
         box.prop(self, "exported_file_type")
         box.prop(self, "path_mode")
         box.prop(self, "use_selection")
+        box.prop(self, "apply_modifiers")
+        # Put the rest of the UI elements on a new row
+        row = self.layout.row()
+        row.prop(self, "clear_system_console")
     
     def execute(self, context):
         """

@@ -1,30 +1,48 @@
 FFM_MESSAGE = "Vulcano File Format Exporter: "
 
-import bpy
+# This is required to support reloading of modules in Blender with F8
+if "bpy" in locals():
+    import importlib
+    importlib.reload(utils)
+else:
+    from . import utils
+
 import bmesh
+import bpy
 import os
 
 def export_VulcanoFileFormatMesh(operator, context):
-    # Clear System Console
-    os.system("cls")
+    if True == operator.clear_system_console:
+        # Clear System Console
+        os.system("cls")
     
     # Begin export
     print("\n==========================================================")
     print(FFM_MESSAGE, "Exporting mesh...\n")
     
-    print("operator.exported_file_type", 
-        operator.exported_file_type, 
-        type(operator.exported_file_type))
-    print("operator.path_mode", 
-        operator.path_mode, 
-        type(operator.path_mode))
-    print("operator.use_selection", 
-        operator.use_selection, 
-        type(operator.use_selection))
-    
-    for object in bpy.data.objects:
-        if "MESH" == object.type:
-            mesh = object.data
+    # print("operator.exported_file_type", 
+        # operator.exported_file_type, 
+        # type(operator.exported_file_type))
+    # print("operator.path_mode", 
+        # operator.path_mode, 
+        # type(operator.path_mode))
+    # print("operator.use_selection", 
+        # operator.use_selection, 
+        # type(operator.use_selection))
+    # print("operator.apply_modifiers", 
+        # operator.apply_modifiers, 
+        # type(operator.apply_modifiers))
+
+    export_utils = utils.get_utils()
+
+    #for object in bpy.data.objects:
+    for object in context.scene.objects:
+        if "MESH" == object.type:           
+            if True == operator.apply_modifiers:
+                # Create a temporary mesh with applied modifiers
+                mesh = export_utils.apply_modifiers(object, context, operator)
+            else:
+                mesh = object.data
             
             print("\n> Found object \"%s\"" % (object.name), 
                 "of type:", type(mesh))
@@ -44,6 +62,10 @@ def export_VulcanoFileFormatMesh(operator, context):
             # Create a bmesh object from the mesh object
             bmesh_object = bmesh.new()
             bmesh_object.from_mesh(mesh)
+            
+            # Remove the temporary mesh with applied modifiers
+            if True == operator.apply_modifiers:
+                bpy.data.meshes.remove(mesh)
             
             # Convert the bmesh object's faces to triangles
             bmesh.ops.triangulate(bmesh_object, faces=bmesh_object.faces)

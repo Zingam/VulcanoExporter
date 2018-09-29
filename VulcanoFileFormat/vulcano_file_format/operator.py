@@ -21,13 +21,13 @@ class VulcanoExporter(
     filename_ext = ".vffmsh"
     
     # File filter
-    filter_glob = bpy.props.StringProperty(
+    filter_glob: bpy.props.StringProperty(
         default="*.vffmsh",
         options={"HIDDEN"})
     
     # Export options
-    box_title = bpy.props.StringProperty()
-    exported_file_type = bpy.props.EnumProperty(
+    box_title: bpy.props.StringProperty()
+    exported_file_type: bpy.props.EnumProperty(
         items=(("EXPORT_FORMAT_BINARY", "Binary",
                 "Exports Vulcano File (.vmsh) in binary format"),
                ("EXPORT_FORMAT_ASCII", "ASCII",
@@ -35,19 +35,19 @@ class VulcanoExporter(
         name="Format:",
         description="Select the exported file format type")
         
-    path_mode = bpy_extras.io_utils.path_reference_mode
+    path_mode: bpy_extras.io_utils.path_reference_mode
     
-    use_selection = bpy.props.BoolProperty(
+    use_selection: bpy.props.BoolProperty(
         name="Selection Only",
         description="Export selected objects only",
         default=True)
         
-    apply_modifiers = bpy.props.BoolProperty(
+    apply_modifiers: bpy.props.BoolProperty(
         name="Apply Modifiers",
         description="Apply modifiers",
         default=True)
         
-    clear_system_console = bpy.props.BoolProperty(
+    clear_system_console: bpy.props.BoolProperty(
         name="Clear System Console",
         description="Clear the Blender system console",
         default=True)
@@ -86,11 +86,10 @@ class VulcanoExporter(
     ############################################################################
     # Class methods
     ############################################################################
-                                                                      
+     
     @classmethod
     def poll(cls, context):
         """
         Checks if the operator can run.
         """
         return context.active_object is not None
-    

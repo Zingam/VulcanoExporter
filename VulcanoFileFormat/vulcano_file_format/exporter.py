@@ -1,4 +1,4 @@
-FFM_MESSAGE = "Vulcano File Format Exporter: "
+FFM_MESSAGE = "Vulcano File Format Exporter:\n    "
 
 # This is required to support reloading of modules in Blender with F8
 if "bpy" in locals():
@@ -17,8 +17,11 @@ def export_VulcanoFileFormatMesh(operator, context):
         os.system("cls")
     
     # Begin export
-    print("\n==========================================================")
-    print(FFM_MESSAGE, "Exporting mesh...\n")
+    print("\n")
+    print("==========================================================")
+    print(FFM_MESSAGE, "exporting mesh")
+    print("\n") 
+    
     
     # print("operator.exported_file_type", 
         # operator.exported_file_type, 
@@ -85,4 +88,7 @@ def export_VulcanoFileFormatMesh(operator, context):
                 print(indices[:-1])
                         
             bmesh_object.free()
-                        
+    
+    print("\n")    
+    print("Mesh successfully exported to file:\n    ", operator.filepath)
+    print("==========================================================")

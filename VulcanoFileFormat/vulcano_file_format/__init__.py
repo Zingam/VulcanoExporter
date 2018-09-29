@@ -6,7 +6,7 @@ bl_info = {
     "name":        "Vulcano File Format (.vffmsh)",
     "author":      "Zingam the Great",
     "version":     (0, 0, 1),
-    "blender":     (2, 79, 0),
+    "blender":     (2, 80, 0),
     "location":    "File > Export > Vulcano (.vmsh)",
     "description": "This script exports Blender geometry in Vulcano file "
                    "format (.vmsh).",
@@ -70,12 +70,12 @@ def register():
     # Register classes
     bpy.utils.register_class(operator.VulcanoExporter)
     # Register UI elements
-    bpy.types.INFO_MT_file_export.append(export_menu)
+    bpy.types.TOPBAR_MT_file_export.append(export_menu)
 
 # Unregister the add-on
 def unregister():
     # Unregister in reverse order
-    bpy.types.INFO_MT_file_export.remove(export_menu)
+    bpy.types.TOPBAR_MT_file_export.remove(export_menu)
     bpy.utils.unregister_class(operator.VulcanoExporter)
     
 ################################################################################

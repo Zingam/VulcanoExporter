@@ -1,3 +1,12 @@
+import sys
+
+# A pointer to the module object instance itself
+this = sys.modules[__name__]
+
+# Create a global variable and make an explicit assignments on it 
+this.errorMessage = "No error"
+
+
 def is_greater_than_or_equal(tuple1 :tuple, tuple2: tuple):
     for i in range(len(tuple2) - 1):
         if (tuple1[i] < tuple2[i]):
@@ -14,7 +23,8 @@ def get_utils():
     if is_greater_than_or_equal(bpy.app.version, (2, 80, 0)):
         module_name = package_name + ".utils_blender_2_8_0"
     else:
-        module_name = package_name + ".utils_blender_2_7_0"
+        this.errorMessage = "Unsupported Blender version. Blender 2.80 or later is required."
+        return None
     #   3. Import the corresponding Python module and reload if necessary
     import importlib
     import sys
@@ -25,3 +35,6 @@ def get_utils():
         module = importlib.import_module(module_name)
 
     return module
+
+def get_last_error():
+    return this.errorMessage

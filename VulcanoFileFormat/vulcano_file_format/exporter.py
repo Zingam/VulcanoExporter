@@ -19,7 +19,17 @@ def export_VulcanoFileFormatMesh(operator, context):
     # Begin export
     print("\n")
     print("==========================================================")
-    print(FFM_MESSAGE, "exporting mesh")
+    
+    export_utils = utils.get_utils()
+    if None == export_utils:
+        errorMessage = "Export failed: " + utils.get_last_error()
+        operator.report({'ERROR'}, errorMessage)
+        print(FFM_MESSAGE, errorMessage)
+        print("==========================================================")
+        return
+    modifierManager = export_utils.ModifierManager()
+
+    print(FFM_MESSAGE, "Exporting mesh...")
     print("\n") 
     
     
@@ -35,9 +45,6 @@ def export_VulcanoFileFormatMesh(operator, context):
     # print("operator.apply_modifiers", 
         # operator.apply_modifiers, 
         # type(operator.apply_modifiers))
-
-    export_utils = utils.get_utils()
-    modifierManager = export_utils.ModifierManager()
 
     #for object in bpy.data.objects:
     for object in context.scene.objects:

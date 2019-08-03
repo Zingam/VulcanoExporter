@@ -37,16 +37,18 @@ def export_VulcanoFileFormatMesh(operator, context):
         # type(operator.apply_modifiers))
 
     export_utils = utils.get_utils()
+    modifierManager = export_utils.ModifierManager()
 
     #for object in bpy.data.objects:
     for object in context.scene.objects:
         if "MESH" == object.type:           
             if True == operator.apply_modifiers:
                 # Create a temporary mesh with applied modifiers
-                mesh = export_utils.apply_modifiers(object, context, operator)
+                mesh = modifierManager.apply_modifiers(object, context, operator)
             else:
                 mesh = object.data
             
+            # Print mesh data
             print("\n> Found object \"%s\"" % (object.name), 
                 "of type:", type(mesh))
             
@@ -54,6 +56,7 @@ def export_VulcanoFileFormatMesh(operator, context):
             for vertex in mesh.vertices:
                 print("    {0:10f}, {1:10f}, {2:10f}"
                     .format(vertex.co.x, vertex.co.y, vertex.co.z))
+            
             print("\n  Faces (indices):\n")
             for polygon in mesh.polygons:
                 indices = "    "
@@ -68,7 +71,7 @@ def export_VulcanoFileFormatMesh(operator, context):
             
             # Remove the temporary mesh with applied modifiers
             if True == operator.apply_modifiers:
-                bpy.data.meshes.remove(mesh)
+                modifierManager.clear_mesh()
             
             # Convert the bmesh object's faces to triangles
             bmesh.ops.triangulate(bmesh_object, faces=bmesh_object.faces)

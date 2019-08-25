@@ -11,7 +11,24 @@ import bmesh
 import bpy
 import os
 
-def export_VulcanoFileFormatMesh(operator, context):
+def printCollectionObjects(collection, tabSpace):
+    for collection in collection.children:
+        collectionMessage = "    > Collection:  {}".format(collection.name)
+        # Add white space to the front of the string
+        collectionMessageLength = len(collectionMessage) + tabSpace
+        outputMessage = collectionMessage.rjust(collectionMessageLength)
+        print(outputMessage)
+        
+        for object in collection.objects:
+            collectionMessage = "      - {:10}: {}".format(object.type, object.name)
+            # Add white space to the front of the string
+            collectionMessageLength = len(collectionMessage) + tabSpace
+            outputMessage = collectionMessage.rjust(collectionMessageLength)
+            print(outputMessage)
+            
+        printCollectionObjects(collection, tabSpace + 2)
+
+def export_VulcanoFileFormatMesh(operator, context):       
     if True == operator.clear_system_console:
         # Clear System Console
         os.system("cls")
@@ -49,9 +66,8 @@ def export_VulcanoFileFormatMesh(operator, context):
 
     # Enumerate the collections in the scene's master collection
     print("  Collections:")
-    print("    > Collection:  ", context.scene.collection.name)
-    for object in context.scene.collection.all_objects:
-        print("      - {:10}: {}".format(object.type, object.name))
+    print("    > Collection:  ", context.scene.collection.name) 
+    printCollectionObjects(context.scene.collection, 2)
     
     # Enumerate the objects in the scene
     print("\n")

@@ -3,13 +3,13 @@ Vulcano File Format (.vmsh)
 
 Description
 ----
-[<img src="https://download.blender.org/institute/logos/blender-plain.png" width=200>][1]
+[<img src="https://download.blender.org/branding/blender_logo.png" width=200>][1]
 
 [**Blender**][1] based 3D data exporter
 
 Requirements
 ----
-* [**Blender 2.79**][1]
+* [**Blender 2.80**][1]
 
 [1]: https://www.blender.org
 

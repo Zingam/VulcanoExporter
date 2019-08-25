@@ -60,7 +60,11 @@ class VulcanoExporter(
         """
         Draws the layout manually. Without this method the UI methods will be
         placed in the layout automatically.
-        """ 
+        
+        Parameters:
+            context    bpy.context
+        """
+        
         # Draw a box and put the UI elements inside
         box = self.layout.box()
         # A title for the box
@@ -77,7 +81,11 @@ class VulcanoExporter(
     def execute(self, context):
         """
         Called when running the operator.
+        
+        Parameters:
+            context    bpy.context
         """
+        
         from . import exporter
         exporter.export_VulcanoFileFormatMesh(self, context)
         
@@ -91,5 +99,9 @@ class VulcanoExporter(
     def poll(cls, context):
         """
         Checks if the operator can run.
+        
+        Parameters:
+            context    bpy.context
         """
+        
         return context.active_object is not None

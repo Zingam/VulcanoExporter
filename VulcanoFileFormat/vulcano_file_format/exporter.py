@@ -18,14 +18,14 @@ def export_VulcanoFileFormatMesh(operator, context):
     
     # Begin export
     print("\n")
-    print("==========================================================")
+    print("====================================================================")
     
     export_utils = utils.get_utils()
     if None == export_utils:
         errorMessage = "Export failed: " + utils.get_last_error()
         operator.report({'ERROR'}, errorMessage)
         print(FFM_MESSAGE, errorMessage)
-        print("==========================================================")
+        print("====================================================================")
         return
     modifierManager = export_utils.ModifierManager()
 
@@ -46,7 +46,15 @@ def export_VulcanoFileFormatMesh(operator, context):
         # operator.apply_modifiers, 
         # type(operator.apply_modifiers))
 
-    #for object in bpy.data.objects:
+
+    # Enumerate the collections in the scene's master collection
+    print("  Collections:")
+    print("    > Collection:  ", context.scene.collection.name)
+    for object in context.scene.collection.all_objects:
+        print("      - {:10}: {}".format(object.type, object.name))
+    
+    # Enumerate the objects in the scene
+    print("\n")
     for object in context.scene.objects:
         if "MESH" == object.type:           
             if True == operator.apply_modifiers:
@@ -56,10 +64,11 @@ def export_VulcanoFileFormatMesh(operator, context):
                 mesh = object.data
             
             # Print mesh data
-            print("\n> Found object \"%s\"" % (object.name), 
-                "of type:", type(mesh))
+            print("  ----------------------------------------------------------")
+            print("  > Found object \"%s\"" % (object.name), 
+                  "of type:", type(mesh))
             
-            print("\n  Vertex coordinates:\n")
+            print("\n    Vertex coordinates:\n")
             for vertex in mesh.vertices:
                 print("    {0:10f}, {1:10f}, {2:10f}"
                     .format(vertex.co.x, vertex.co.y, vertex.co.z))
@@ -83,14 +92,14 @@ def export_VulcanoFileFormatMesh(operator, context):
             # Convert the bmesh object's faces to triangles
             bmesh.ops.triangulate(bmesh_object, faces=bmesh_object.faces)
             
-            print("\n> Converting to:", type(bmesh_object))
-            print("\n  Vertex coordinates:\n")
+            print("\n  > Converting to:", type(bmesh_object))
+            print("\n    Vertex coordinates:\n")
             mesh = object.data
             for vertex in bmesh_object.verts:
                 print("    {0:10f}, {1:10f}, {2:10f}"
                     .format(vertex.co.x, vertex.co.y, vertex.co.z))
             
-            print("\n  Faces (indices):\n")
+            print("\n    Faces (indices):\n")
             for face in bmesh_object.faces:
                 indices = "    "
                 for vertex in face.verts:
@@ -98,7 +107,9 @@ def export_VulcanoFileFormatMesh(operator, context):
                 print(indices[:-1])
                         
             bmesh_object.free()
+            
+            print("  ----------------------------------------------------------") 
     
-    print("\n")    
+    print("\n")
     print("Mesh successfully exported to file:\n    ", operator.filepath)
-    print("==========================================================")
+    print("====================================================================")

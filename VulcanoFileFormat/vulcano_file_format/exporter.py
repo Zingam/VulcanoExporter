@@ -28,10 +28,24 @@ def printCollectionObjects(collection, tabSpace):
             
         printCollectionObjects(collection, tabSpace + 2)
 
+def print_object_info(object: bpy.types.Object):
+    print("  > Found object \"{0}\" of type {1}"
+        .format(object.name, object.type))
+    location= object.location
+    print("    at location: {0:10f}, {1:10f}, {2:10f}"
+            .format(location.x, location.y, location.z))
+
+    if object.data is not None:
+        print("    of type: {0}".format(type(object.data)))
+
 def export_VulcanoFileFormatMesh(operator, context):       
     if True == operator.clear_system_console:
         # Clear System Console
         os.system("cls")
+
+        import sys
+        print("Python version: {}".format(sys.version))
+        print("       info:    {}".format(sys.version_info))
     
     # Begin export
     print("\n")
@@ -81,8 +95,8 @@ def export_VulcanoFileFormatMesh(operator, context):
             
             # Print mesh data
             print("  ----------------------------------------------------------")
-            print("  > Found object \"%s\"" % (object.name), 
-                  "of type:", type(mesh))
+
+            print_object_info(object)
             
             print("\n    Vertex coordinates:\n")
             for vertex in mesh.vertices:
@@ -124,7 +138,14 @@ def export_VulcanoFileFormatMesh(operator, context):
                         
             bmesh_object.free()
             
-            print("  ----------------------------------------------------------") 
+            print("  ----------------------------------------------------------")
+
+        if "EMPTY" == object.type:
+            print("  ----------------------------------------------------------")
+
+            print_object_info(object)
+
+            print("  ----------------------------------------------------------")
     
     print("\n")
     print("Mesh successfully exported to file:\n    ", operator.filepath)

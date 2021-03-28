@@ -14,4 +14,8 @@
 ::   / ?      - Displays help at the command prompt.
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-mklink /j ..\vulcano_file_format VulcanoFileFormat\vulcano_file_format
+set path=%~p0
+set path=%path:~0,-1%
+for %%A in ("%path%") do (set CurrentDirName=%%~nxA)
+
+mklink /j ..\%AddOnDirName% %CurrentDirName%\%AddOnDirName%

@@ -1,30 +1,31 @@
 import bpy
 import bpy_extras
 
+
 class VulcanoExporter(
-    bpy.types.Operator,
-    bpy_extras.io_utils.ExportHelper):
+        bpy.types.Operator,
+        bpy_extras.io_utils.ExportHelper):
     """Exports current scene to Vulcano File Format (.vmsh)"""
-    
+
     # Unique identifier to be referenced by buttons and menu items
     bl_idname = "vulcano_file_format.vulcano_exporter"
     # Text used by UI elements to display in the interface
     bl_label = "Export Vulcano File (.vffmsh)"
     # Add operator preset options to the File Selection dialog
     bl_options = {"PRESET"}
-    
+
     ############################################################################
     # Operator properties
-    ############################################################################  
-    
+    ############################################################################
+
     # Set the file extension (used by ExportHelper internally)
     filename_ext = ".vffmsh"
-    
+
     # File filter
     filter_glob: bpy.props.StringProperty(
         default="*.vffmsh",
         options={"HIDDEN"})
-    
+
     # Export options
     box_title: bpy.props.StringProperty()
     exported_file_type: bpy.props.EnumProperty(
@@ -34,37 +35,37 @@ class VulcanoExporter(
                 "Exports Vulcano File (.vmsh) in ASCII text format")),
         name="Format:",
         description="Select the exported file format type")
-        
+
     path_mode: bpy_extras.io_utils.path_reference_mode
-    
+
     use_selection: bpy.props.BoolProperty(
         name="Selection Only",
         description="Export selected objects only",
         default=True)
-        
+
     apply_modifiers: bpy.props.BoolProperty(
         name="Apply Modifiers",
         description="Apply modifiers",
         default=True)
-        
+
     clear_system_console: bpy.props.BoolProperty(
         name="Clear System Console",
         description="Clear the Blender system console",
         default=True)
-    
+
     ############################################################################
     # Methods
     ############################################################################
-    
+
     def draw(self, context):
         """
         Draws the layout manually. Without this method the UI methods will be
         placed in the layout automatically.
-        
+
         Parameters:
             context    bpy.context
         """
-        
+
         # Draw a box and put the UI elements inside
         box = self.layout.box()
         # A title for the box
@@ -77,31 +78,31 @@ class VulcanoExporter(
         # Put the rest of the UI elements on a new row
         row = self.layout.row()
         row.prop(self, "clear_system_console")
-    
+
     def execute(self, context):
         """
         Called when running the operator.
-        
+
         Parameters:
             context    bpy.context
         """
-        
+
         from . import exporter
-        exporter.export_VulcanoFileFormatMesh(self, context)
-        
+        exporter.export_vffmsh(self, context)
+
         return {"FINISHED"}
-    
+
     ############################################################################
     # Class methods
     ############################################################################
-     
+
     @classmethod
     def poll(cls, context):
         """
         Checks if the operator can run.
-        
+
         Parameters:
             context    bpy.context
         """
-        
+
         return context.active_object is not None
